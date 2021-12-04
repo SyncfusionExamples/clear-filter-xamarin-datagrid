@@ -75,11 +75,10 @@
                     WidthRequest="200">
                 <Picker.Items>
                     <x:String>All Columns</x:String>
+                    <x:String>OrderID</x:String>
                     <x:String>CustomerID</x:String>
-                    <x:String>BookID</x:String>
-                    <x:String>FirstName</x:String>
-                    <x:String>LastName</x:String>
-                    <x:String>BookName</x:String>
+                    <x:String>Freight</x:String>
+                    <x:String>Country</x:String>
                 </Picker.Items>
             </Picker>
 

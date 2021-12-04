@@ -29,7 +29,7 @@ namespace FilteringDemo
                 {
                     OrderID = i,
                     CustomerID = CustomerID[random.Next(15)],
-                    Freight = (Math.Round(random.Next(1000) + random.NextDouble(), 2)).ToString(),
+                    Freight = (Math.Round(random.Next(1000) + random.NextDouble(), 2)),
                     Country = country[random.Next(20)]
                 };
                 orderDetails.Add(ord);

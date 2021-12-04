@@ -166,7 +166,7 @@ namespace FilteringDemo
                     {
                         if (item.CustomerID.ToLower().Contains(FilterText.ToLower()) ||
                             item.OrderID.ToString().ToLower().Contains(FilterText.ToLower()) ||
-                            item.Freight.ToLower().Contains(FilterText.ToLower()) ||
+                            item.Freight.ToString().ToLower().Contains(FilterText.ToLower()) ||
                             item.Country.ToLower().Contains(FilterText.ToLower()))
                             return true;
                         return false;

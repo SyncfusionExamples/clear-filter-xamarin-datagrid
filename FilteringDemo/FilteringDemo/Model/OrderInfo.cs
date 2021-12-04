@@ -15,7 +15,7 @@ namespace FilteringDemo
 
         private int _orderID;
         private string _customerID;
-        private string _freight;
+        private double _freight;
         private string _country;
 
         #endregion
@@ -42,7 +42,7 @@ namespace FilteringDemo
             }
         }
 
-        public string Freight
+        public double Freight
         {
             get { return _freight; }
             set
