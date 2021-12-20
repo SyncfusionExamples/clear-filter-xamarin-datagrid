@@ -4,9 +4,9 @@
              xmlns:local="clr-namespace:FilteringDemo"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
              x:Class="FilteringDemo.MainPage">
-
+    
     <ContentPage.BindingContext>
-        <local:ViewModel x:Name="viewModel" />
+        <local:ViewModel x:Name="viewModel"/>
     </ContentPage.BindingContext>
 
     <StackLayout HorizontalOptions="FillAndExpand"
@@ -27,13 +27,18 @@
                        Grid.Column="0"
                        IsVisible="true"
                        Placeholder="Search here to Filter"
-                       TextChanged="OnFilterTextChanged" />
+                        >
+                <SearchBar.Behaviors>
+                    <local:VisualElementBehavior viewModels="{x:Reference viewModel}"></local:VisualElementBehavior>
+                </SearchBar.Behaviors>
+            </SearchBar>
 
             <syncfusion:SfDataGrid x:Name="dataGrid"
                                    Grid.Row="1"
                                    Grid.Column="0"
                                    AutoGenerateColumns="false"
                                    ColumnSizer="Star"
+                                   ItemsSource="{Binding OrdersInfo}"
                                    HorizontalOptions="FillAndExpand"
                                    SelectionMode="Single"
                                    VerticalOptions="FillAndExpand">
@@ -44,6 +49,7 @@
                     <syncfusion:GridTextColumn MappingName="Freight" />
                     <syncfusion:GridTextColumn MappingName="Country" />
                 </syncfusion:SfDataGrid.Columns>
+
             </syncfusion:SfDataGrid>
         </Grid>
 
@@ -71,7 +77,8 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     HorizontalOptions="Start"
-                    SelectedIndexChanged="OnColumnsSelectionChanged"
+                    Title="ColumnsList"
+                    SelectedIndex="{Binding ColumnSelectedIndex}"
                     WidthRequest="200">
                 <Picker.Items>
                     <x:String>All Columns</x:String>
@@ -80,20 +87,26 @@
                     <x:String>Freight</x:String>
                     <x:String>Country</x:String>
                 </Picker.Items>
+                <Picker.Behaviors>
+                    <local:VisualElementBehavior OptionListPicker="{x:Reference OptionsList}" DataGrid="{x:Reference dataGrid}" Searchbar="{x:Reference filterText}" viewModels="{x:Reference viewModel}"/>
+                </Picker.Behaviors>
             </Picker>
 
             <Picker x:Name="OptionsList"
                     Grid.Row="1"
                     Grid.Column="1"
+                    Title="OptionsList"
                     HorizontalOptions="Start"
                     IsVisible="False"
-                    SelectedIndexChanged="OnFilterOptionsChanged"
                     WidthRequest="200">
                 <Picker.Items>
                     <x:String>Equals</x:String>
                     <x:String>NotEquals</x:String>
                     <x:String>Contains</x:String>
                 </Picker.Items>
+                <Picker.Behaviors>
+                    <local:VisualElementBehavior DataGrid="{x:Reference dataGrid}" Searchbar="{x:Reference filterText}" viewModels="{x:Reference viewModel}"></local:VisualElementBehavior>
+                </Picker.Behaviors>
             </Picker>
         </Grid>
     </StackLayout>

@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace FilteringDemo
 {
@@ -20,6 +22,7 @@ namespace FilteringDemo
         #region Fields
 
         private string filtertext = "";
+        private int columnselectedIndex = 0;
         private string selectedcolumn = "All Columns";
         private string selectedcondition = "Contains";
 
@@ -43,6 +46,13 @@ namespace FilteringDemo
 
         }
 
+        public int ColumnSelectedIndex
+        {
+            get { return columnselectedIndex; }
+            set { columnselectedIndex = value;
+                RaisePropertyChanged("ColumnSelectedIndex");
+            }
+        }
         public string SelectedCondition
         {
             get { return selectedcondition; }
