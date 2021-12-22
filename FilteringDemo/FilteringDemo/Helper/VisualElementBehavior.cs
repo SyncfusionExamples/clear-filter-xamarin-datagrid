@@ -12,28 +12,30 @@ namespace FilteringDemo
 		public Picker OptionListPicker { get; set; }
 		public ViewModel viewModels { get; set; }
 		public SearchBar Searchbar { get; set; }
+		public Picker columnListPicker { get; set; }
 
 		protected override void OnAttachedTo(VisualElement bindable)
 		{
 			viewModels.filtertextchanged = OnFilterChanged;
 			if (bindable as SearchBar != null)
             {
-				(bindable as SearchBar).TextChanged += OnFilterTextChanged;
-
+				Searchbar = (bindable as SearchBar);
+				Searchbar.TextChanged += OnFilterTextChanged;
 			}
 			else if(bindable as Picker !=null)
             {
 				
 				if((bindable as Picker).Title== "OptionsList")
                 {
-					(bindable as Picker).SelectedIndexChanged += OnFilterOptionsChanged;
-
+					OptionListPicker = (bindable as Picker);
+					OptionListPicker.SelectedIndexChanged += OnFilterOptionsChanged;
 				}
 				else
                 {
-					(bindable as Picker).SelectedIndexChanged += OnColumnsSelectionChanged;
-                }
-            }
+					columnListPicker = (bindable as Picker);
+					columnListPicker.SelectedIndexChanged += OnColumnsSelectionChanged;
+				}
+			}
 			base.OnAttachedTo(bindable);
 
 		}
@@ -108,6 +110,17 @@ namespace FilteringDemo
 				}
 			}
 		}
-
+		protected override void OnDetachingFrom(VisualElement bindable)
+		{
+			Searchbar.TextChanged -= OnFilterTextChanged;
+			OptionListPicker.SelectedIndexChanged -= OnFilterOptionsChanged;
+			columnListPicker.SelectedIndexChanged -= OnColumnsSelectionChanged;
+			Searchbar = null;
+			OptionListPicker = null;
+			columnListPicker = null;
+			DataGrid = null;
+			viewModels = null;
+			base.OnDetachingFrom(bindable);
+		}
 	}
 }
