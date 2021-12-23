@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FilteringDemo"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+             x:Class="FilteringDemo.MainPage">
+    
+    <ContentPage.BindingContext>
+        <local:ViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+
+    <StackLayout HorizontalOptions="FillAndExpand"
+                 Orientation="Vertical"
+                 VerticalOptions="FillAndExpand">
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <SearchBar x:Name="filterText"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       IsVisible="true"
+                       Placeholder="Search here to Filter"
+                        >
+                <SearchBar.Behaviors>
+                    <local:VisualElementBehavior viewModels="{x:Reference viewModel}"></local:VisualElementBehavior>
+                </SearchBar.Behaviors>
+            </SearchBar>
+
+            <syncfusion:SfDataGrid x:Name="dataGrid"
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   AutoGenerateColumns="false"
+                                   ColumnSizer="Star"
+                                   ItemsSource="{Binding OrdersInfo}"
+                                   HorizontalOptions="FillAndExpand"
+                                   SelectionMode="Single"
+                                   VerticalOptions="FillAndExpand">
+
+                <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:GridTextColumn MappingName="OrderID" />
+                    <syncfusion:GridTextColumn MappingName="CustomerID" />
+                    <syncfusion:GridTextColumn MappingName="Freight" />
+                    <syncfusion:GridTextColumn MappingName="Country" />
+                </syncfusion:SfDataGrid.Columns>
+
+            </syncfusion:SfDataGrid>
+        </Grid>
+
+        <Grid ColumnSpacing="10" Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="filterlabel"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   FontSize="15"
+                   HorizontalOptions="Start"
+                   Text="Filter Options"
+                   VerticalOptions="Center" />
+
+            <Picker x:Name="ColumnsList"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalOptions="Start"
+                    Title="ColumnsList"
+                    SelectedIndex="{Binding ColumnSelectedIndex}"
+                    WidthRequest="200">
+                <Picker.Items>
+                    <x:String>All Columns</x:String>
+                    <x:String>OrderID</x:String>
+                    <x:String>CustomerID</x:String>
+                    <x:String>Freight</x:String>
+                    <x:String>Country</x:String>
+                </Picker.Items>
+                <Picker.Behaviors>
+                    <local:VisualElementBehavior OptionListPicker="{x:Reference OptionsList}" DataGrid="{x:Reference dataGrid}" Searchbar="{x:Reference filterText}" viewModels="{x:Reference viewModel}"/>
+                </Picker.Behaviors>
+            </Picker>
+
+            <Picker x:Name="OptionsList"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Title="OptionsList"
+                    HorizontalOptions="Start"
+                    IsVisible="False"
+                    WidthRequest="200">
+                <Picker.Items>
+                    <x:String>Equals</x:String>
+                    <x:String>NotEquals</x:String>
+                    <x:String>Contains</x:String>
+                </Picker.Items>
+                <Picker.Behaviors>
+                    <local:VisualElementBehavior DataGrid="{x:Reference dataGrid}" Searchbar="{x:Reference filterText}" viewModels="{x:Reference viewModel}"></local:VisualElementBehavior>
+                </Picker.Behaviors>
+            </Picker>
+        </Grid>
+    </StackLayout>
+
+</ContentPage>
